@@ -1,26 +1,30 @@
 <div class="card mt-4">
-    <div class="card-header">Dovanu sąrašas</div>
+    <app-loading *ngIf="isLoading"></app-loading>
+
+
+    <div class="card-header">Dovanų sąrašas</div>
     <div class="card-body">
-        <table class="table">
+        <div class="alert alert-danger" *ngIf="isError">Įvyko klaida</div>
+        <table class="table" *ngIf="!isLoading && !isError">
             <thead>
                 <tr>
                     <th>Nr.</th>
                     <th>Kam skirta</th>
                     <th>Pavadinimas</th>
                     <th>Statusas</th>
-                    <th class="Veiksmai">Veiksmai</th>
+                    <th class="table-veiksmai">Veiksmai</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let good of goods; let i=index">
-                    <td>{{i+1}}</td>
-                    <td>{{good.recipient}}</td>
-                    <td>{{good.description}}</td>
-                    <td>{{good.status}}</td>
+                    <td>{{ i+1 }}.</td>
+                    <td>{{ good.recipient }}</td>
+                    <td>{{ good.description }}</td>
+                    <td>{{ good.status }}</td>
                     <td class="text-center">
-                        <a class="btn btn-success">Redaguoti</a>
+                        <a class="btn btn-success" [routerLink]="['/edit', good.id]">Redaguoti</a>
                         &nbsp;&nbsp;
-                        <a class="btn btn-danger">Istrinti</a>
+                        <button class="btn btn-danger" (click)="deleteRecord(good.id)">Ištrinti</button>
                     </td>
                 </tr>
             </tbody>
